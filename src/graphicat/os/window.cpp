@@ -1,4 +1,5 @@
 #include "window.hpp"
+#include <iostream>
 
 namespace gc::os {
     void WindowSystem::init() {
@@ -139,8 +140,15 @@ namespace gc::os {
         glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, properties.transparent_framebuffer);
         glfwWindowHint(GLFW_FOCUS_ON_SHOW, properties.focus_on_show);
         glfwWindowHint(GLFW_SCALE_TO_MONITOR, properties.scale_to_monitor);
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 
         window = glfwCreateWindow(static_cast<int>(size.x), static_cast<int>(size.y), properties.title.c_str(), fs_monitor, nullptr);
+
+        if (!window) {
+            const char* err;
+            glfwGetError(&err);
+            std::cerr << "Failed to create window: " << err << std::endl;
+        }
 
         if (pos.has_value()) {
             // Set size again to make sure size didn't get clipped by the window being placed such that part of it was out of the bounds of the
