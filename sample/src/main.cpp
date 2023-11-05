@@ -1,3 +1,4 @@
+#include <graphicat/graphicat.hpp>
 #include <graphicat/os/window.hpp>
 
 #include <memory>
@@ -5,7 +6,7 @@
 enum class Mode { Left, Right, Windowed };
 
 int main() {
-    gc::os::WindowSystem::init();
+    gc::GlobalState::init();
 
     gc::os::WindowProperties properties{};
     properties.title = "graphicat_sample";
@@ -40,5 +41,5 @@ int main() {
         }
     }
 
-    gc::os::WindowSystem::terminate();
+    gc::GlobalState::terminate();
 }
